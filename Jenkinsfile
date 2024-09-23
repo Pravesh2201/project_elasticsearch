@@ -76,10 +76,10 @@ pipeline {
         // }
     }
 
-    // post {
-    //     always {
-    //         // Cleanup workspace after the build
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        always {
+            // Cleanup workspace after the build
+            cleanWs()
+        }
+    }
 }
