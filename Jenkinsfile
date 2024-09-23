@@ -55,10 +55,10 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 // Change to the project directory before applying Terraform changes
-                dir('project_terraform_code') {
+                // dir('project_terraform_code') {
                     // Apply the Terraform changes with lock disabled
                     sh 'terraform apply -auto-approve -lock=false'
-                }
+                // }
             }
         }
     }
