@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // Check out the repository with Terraform code
                 git branch: 'main', 
-                    url: 'git@github.com:Pravesh2201/project_terraform_code.git'
+                    url: 'https://github.com/Pravesh2201/project_terraform_code.git'
             }
         }
 
