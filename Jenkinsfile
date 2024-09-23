@@ -56,8 +56,6 @@ pipeline {
                 input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
             }
         }
-        
-
 
         stage('Terraform Apply') {
             steps {
@@ -70,7 +68,10 @@ pipeline {
     post {
         always {
             // Cleanup workspace after the build
-            cleanWs()
+            script {
+                // Wrap cleanWs in a script block
+                cleanWs()
+            }
         }
     }
 }
