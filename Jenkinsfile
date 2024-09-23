@@ -52,9 +52,11 @@ pipeline {
         }
 
         stage('User Approval') {
-            input {
-                message 'Do you want to apply the Terraform changes?'
-                ok 'Yes, apply'
+            steps {
+                input {
+                    message 'Do you want to apply the Terraform changes?'
+                    ok 'Yes, apply'
+                }
             }
         }
 
