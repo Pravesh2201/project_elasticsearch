@@ -19,7 +19,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 // Change to the project directory before running Terraform commands
-                dir('project_terraform_code') {
+                // dir('project_terraform_code') {
                     // Initialize the Terraform backend (S3 and DynamoDB for state locking)
                     sh '''
                         terraform init \
@@ -28,7 +28,7 @@ pipeline {
                         -backend-config="region=${REGION}" \
                         -backend-config="dynamodb_table=terraform-lock-table"
                     '''
-                }
+                // }
             }
         }
 
