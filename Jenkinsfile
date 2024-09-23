@@ -50,15 +50,14 @@ pipeline {
                 sh 'terraform plan -lock=false -out=tfplan'
             }
         }
-
+        
         stage('User Approval') {
             steps {
-                input {
-                    message 'Do you want to apply the Terraform changes?'
-                    ok 'Yes, apply'
-                }
+                input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
             }
         }
+        
+
 
         stage('Terraform Apply') {
             steps {
