@@ -35,19 +35,19 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 // Change to the project directory before running Terraform commands
-                dir('project_terraform_code') {
+                // dir('project_terraform_code') {
                     // Show the Terraform plan with lock disabled
                     sh 'terraform plan -lock=false -out=tfplan'
-                }
+                // }
             }
         }
         
         stage('User Approval') {
             steps {
                 // Change to the project directory before waiting for user input
-                dir('project_terraform_code') {
+                // dir('project_terraform_code') {
                     input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
-                }
+                // }
             }
         }
 
