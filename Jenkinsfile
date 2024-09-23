@@ -16,51 +16,48 @@ pipeline {
             }
         }
 
-        // stage('Install Terraform') {
-        //     steps {
-        //         script {
-        //             // Install Terraform on Jenkins agent (only if not preinstalled)
-        //             sh '''
-        //                 curl -o /tmp/terraform.zip \
-        //                 https://releases.hashicorp.com/terraform/1.4.5/\
-        //                 terraform_1.4.5_linux_amd64.zip
-        //                 unzip /tmp/terraform.zip -d /usr/local/bin/
-        //                 terraform -v
-        //             '''
-        //         }
-        //     }
-        // }
-
         stage('Terraform Init') {
             steps {
-                // Initialize the Terraform backend (S3 and DynamoDB for state locking)
-                sh '''
-                    terraform init \
-                    -backend-config="bucket=elasticsearch-tool" \
-                    -backend-config="key=terraform/state" \
-                    -backend-config="region=${REGION}" \
-                    -backend-config="dynamodb_table=terraform-lock-table"
-                '''
+                // Change to the project directory before running Terraform commands
+                dir('project_terraform_code') {
+                    // Initialize the Terraform backend (S3 and DynamoDB for state locking)
+                    sh '''
+                        terraform init \
+                        -backend-config="bucket=elasticsearch-tool" \
+                        -backend-config="key=terraform/state" \
+                        -backend-config="region=${REGION}" \
+                        -backend-config="dynamodb_table=terraform-lock-table"
+                    '''
+                }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                // Show the Terraform plan with lock disabled
-                sh 'terraform plan -lock=false -out=tfplan'
+                // Change to the project directory before running Terraform commands
+                dir('project_terraform_code') {
+                    // Show the Terraform plan with lock disabled
+                    sh 'terraform plan -lock=false -out=tfplan'
+                }
             }
         }
         
         stage('User Approval') {
             steps {
-                input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
+                // Change to the project directory before waiting for user input
+                dir('project_terraform_code') {
+                    input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
+                }
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                // Apply the Terraform changes with lock disabled
-                sh 'terraform apply -auto-approve -lock=false'
+                // Change to the project directory before applying Terraform changes
+                dir('project_terraform_code') {
+                    // Apply the Terraform changes with lock disabled
+                    sh 'terraform apply -auto-approve -lock=false'
+                }
             }
         }
     }
@@ -68,10 +65,7 @@ pipeline {
     post {
         always {
             // Cleanup workspace after the build
-            script {
-                // Wrap cleanWs in a script block
-                cleanWs()
-            }
+            cleanWs()
         }
     }
 }
