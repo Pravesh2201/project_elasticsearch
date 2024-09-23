@@ -45,7 +45,7 @@ pipeline {
                 script {
                     sh '''
                         terraform apply -auto-approve -lock=false
-                //     '''
+                    '''
 
                 //     // Capture the public and private IPs
                 //     def public_ip = sh(script: 'terraform output -json public_ip | jq -r .value', returnStdout: true).trim()
