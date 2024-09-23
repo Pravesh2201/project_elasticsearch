@@ -18,44 +18,42 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-
-                    sh '''
-                        terraform init \
-                        -backend-config="bucket=elasticsearch-tool" \
-                        -backend-config="key=terraform/state" \
-                        -backend-config="region=${REGION}" \
-                        -backend-config="dynamodb_table=terraform-lock-table"
-                    '''
-               
+                sh '''
+                    terraform init \
+                    -backend-config="bucket=elasticsearch-tool" \
+                    -backend-config="key=terraform/state" \
+                    -backend-config="region=${REGION}" \
+                    -backend-config="dynamodb_table=terraform-lock-table"
+                '''
             }
         }
 
         stage('Terraform Plan') {
             steps {
-   
-                    sh 'terraform plan -lock=false' 
-
+                sh 'terraform plan -lock=false'
             }
         }
         
         stage('User Approval') {
             steps {
-
-                    input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
-              
+                input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
             }
         }
 
         stage('Terraform Apply') {
             steps {
-
-                sh '''
+                script {
+                    sh '''
                         terraform apply -auto-approve -lock=false
-                        public_ip=$(terraform output -json public_instance_ip | jq -r '.value')
-                        private_ip=$(terraform output -json private_instance_ip | jq -r '.value')
-                        echo "PUBLIC_IP=$public_ip" > ip_outputs.txt
-                        echo "PRIVATE_IP=$private_ip" >> ip_outputs.txt
-                    ''' 
+                    '''
+
+                    // Capture the public and private IPs
+                    def public_ip = sh(script: 'terraform output -json public_ip | jq -r .value', returnStdout: true).trim()
+                    def private_ip = sh(script: 'terraform output -json private_ip | jq -r .value', returnStdout: true).trim()
+
+                    echo "PUBLIC_IP=${public_ip}" > ip_outputs.txt
+                    echo "PRIVATE_IP=${private_ip}" >> ip_outputs.txt
+                }
             }    
         }
 
@@ -71,11 +69,11 @@ pipeline {
                 // Trigger downstream job and pass IPs as parameters
                 build job: 'elasticsearch', 
                       parameters: [
-                          file('ip_outputs.txt')
+                          string(name: 'PUBLIC_IP', value: sh(script: "cat ip_outputs.txt | grep PUBLIC_IP | cut -d '=' -f2", returnStdout: true).trim()),
+                          string(name: 'PRIVATE_IP', value: sh(script: "cat ip_outputs.txt | grep PRIVATE_IP | cut -d '=' -f2", returnStdout: true).trim())
                       ]
             }
         }
-    
     }
 
     // post {
