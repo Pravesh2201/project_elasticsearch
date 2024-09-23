@@ -37,7 +37,8 @@ pipeline {
                 // Change to the project directory before running Terraform commands
                 // dir('project_terraform_code') {
                     // Show the Terraform plan with lock disabled
-                    sh 'terraform plan -lock=false -out=tfplan'
+                    sh 'terraform plan -lock=false' 
+                // -out=tfplan'
                 // }
             }
         }
