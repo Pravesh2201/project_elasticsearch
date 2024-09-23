@@ -16,20 +16,20 @@ pipeline {
             }
         }
 
-        stage('Install Terraform') {
-            steps {
-                script {
-                    // Install Terraform on Jenkins agent (only if not preinstalled)
-                    sh '''
-                        curl -o /tmp/terraform.zip \
-                        https://releases.hashicorp.com/terraform/1.4.5/\
-                        terraform_1.4.5_linux_amd64.zip
-                        unzip /tmp/terraform.zip -d /usr/local/bin/
-                        terraform -v
-                    '''
-                }
-            }
-        }
+        // stage('Install Terraform') {
+        //     steps {
+        //         script {
+        //             // Install Terraform on Jenkins agent (only if not preinstalled)
+        //             sh '''
+        //                 curl -o /tmp/terraform.zip \
+        //                 https://releases.hashicorp.com/terraform/1.4.5/\
+        //                 terraform_1.4.5_linux_amd64.zip
+        //                 unzip /tmp/terraform.zip -d /usr/local/bin/
+        //                 terraform -v
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Terraform Init') {
             steps {
