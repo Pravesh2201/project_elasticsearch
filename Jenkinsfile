@@ -23,10 +23,10 @@ pipeline {
                     // Initialize the Terraform backend (S3 and DynamoDB for state locking)
                     sh '''
                         terraform init \
-                        // -backend-config="bucket=elasticsearch-tool" \
-                        // -backend-config="key=terraform/state" \
-                        // -backend-config="region=${REGION}" \
-                        // -backend-config="dynamodb_table=terraform-lock-table"
+                        -backend-config="bucket=elasticsearch-tool" \
+                        -backend-config="key=terraform/state" \
+                        -backend-config="region=${REGION}" \
+                        -backend-config="dynamodb_table=terraform-lock-table"
                     '''
                 }
             }
