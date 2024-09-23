@@ -53,7 +53,7 @@ pipeline {
 
                 //     echo "PUBLIC_IP=${public_ip}" > ip_outputs.txt
                 //     echo "PRIVATE_IP=${private_ip}" >> ip_outputs.txt
-                // }
+                }
             }    
         }
 
