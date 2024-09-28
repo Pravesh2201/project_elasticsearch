@@ -20,9 +20,4 @@
     src: /etc/nginx/sites-available/kibana_elasticsearch_proxy.conf
     dest: /etc/nginx/sites-enabled/kibana_elasticsearch_proxy.conf
     state: link
-  notify: Restart Nginx  # This will ensure Nginx is restarted after creating the symlink  
-
-- name: Enable Nginx site configuration
-  command: nginx -s reload
-  notify: Restart Nginx
-
+  notify: Restart Nginx  # This will ensure Nginx is restarted after creating the symlink
