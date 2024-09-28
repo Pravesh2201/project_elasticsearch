@@ -24,7 +24,7 @@ resource "aws_instance" "private_instance" {
   key_name = var.key_name
 
   root_block_device {
-    volume_size = 40
+    volume_size = 30
   }
 
   tags = {
