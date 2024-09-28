@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Select action: apply or destroy')
+    }
     environment {
         // Define AWS credentials as environment variables
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
@@ -53,12 +56,31 @@ pipeline {
                 
             }
         }
+        stage('Approval for Destroy') {
+            when {
+                expression { params.ACTION == 'destroy' }
+            }
+            steps {
+                // Prompt for approval before destroying resources
+                input "Do you want to Terraform Destroy?"
+            }
+        }
+
+            stage('Terraform Destroy') {
+                when {
+                    expression { params.ACTION == 'destroy' }
+                }
+                steps {
+                // Destroy Infra
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
     }
 
-    post {
-        always {
-            // Cleanup workspace after the build
-            cleanWs()
-        }
-    }
+    // post {
+    //     always {
+    //         // Cleanup workspace after the build
+    //         cleanWs()
+    //     }
+    // }
 }
