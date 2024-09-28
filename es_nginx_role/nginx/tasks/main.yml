@@ -1,0 +1,21 @@
+- name: Install Nginx
+  package:
+    name: nginx
+    state: present
+
+- name: Start and enable Nginx service
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Deploy Nginx proxy configuration
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/kibana_elasticsearch_proxy.conf
+  notify: Restart Nginx
+
+- name: Enable Nginx site configuration
+  command: nginx -s reload
+  notify: Restart Nginx
+

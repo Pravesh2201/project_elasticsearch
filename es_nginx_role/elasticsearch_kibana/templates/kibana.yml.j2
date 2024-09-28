@@ -1,0 +1,75 @@
+# =================== System: Kibana Server ===================
+
+# Kibana is served by a back end server. This setting specifies the port to use.
+
+server.port: 5601
+
+
+
+# Specifies the address to which the Kibana server will bind. IP addresses and host names are both valid values.
+
+# The default is 'localhost', which usually means remote machines will not be able to connect.
+
+# To allow connections from remote users, set this parameter to a non-loopback address.
+
+server.host: "0.0.0.0"
+
+
+
+#server.publicBaseUrl: ""
+
+server.basePath: "/kibana"
+
+server.rewriteBasePath: true
+
+
+
+
+
+# =================== System: Logging ===================
+
+# Set the value of this setting to off to suppress all logging output, or to debug to log everything. Defaults to 'info'
+
+#logging.root.level: debug
+
+
+
+# Enables you to specify a file where Kibana stores log output.
+
+logging:
+
+  appenders:
+
+    file:
+
+      type: file
+
+      fileName: /var/log/kibana/kibana.log
+
+      layout:
+
+        type: json
+
+  root:
+
+    appenders:
+
+      - default
+
+      - file
+
+
+
+
+
+# =================== System: Other ===================
+
+# The path where Kibana stores persistent data not saved in Elasticsearch. Defaults to data
+
+#path.data: data
+
+
+
+# Specifies the path where Kibana creates the process ID file.
+
+pid.file: /run/kibana/kibana.pid

@@ -1,0 +1,10 @@
+---
+- name: Configure Nginx on Public Server
+  hosts: public
+  roles:
+    - nginx
+
+- name: Configure Elasticsearch and Kibana on Private Server
+  hosts: private
+  roles:
+    - elasticsearch_kibana

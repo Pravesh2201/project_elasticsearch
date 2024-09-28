@@ -1,0 +1,5 @@
+[public]
+{{ PUBLIC_IP }} ansible_ssh_private_key_file=/var/lib/jenkins/AWS.pem ansible_user=ubuntu
+
+[private]
+{{ PRIVATE_IP }} ansible_ssh_private_key_file=/var/lib/jenkins/AWS.pem ansible_user=ubuntu
