@@ -41,13 +41,13 @@ pipeline {
             }
         }
         
-        stage('User Approval') {
-            steps {
+        // stage('User Approval') {
+        //     steps {
 
-                    input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
+        //             input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
               
-            }
-        }
+        //     }
+        // }
 
         stage('Terraform Apply') {
             steps {
@@ -77,10 +77,10 @@ pipeline {
             }
     }
 
-    // post {
-    //     always {
-    //         // Cleanup workspace after the build
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        always {
+            // Cleanup workspace after the build
+            cleanWs()
+        }
+    }
 }
