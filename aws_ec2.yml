@@ -38,9 +38,9 @@ all:
     ip-10-0-1-104:
       ansible_host: 100.25.217.228
       ansible_user: ubuntu
-      ansible_ssh_private_key_file: /var/lib/jenkins/workspace/elasticsearch/AWS.pem
+      ansible_ssh_private_key_file: AWS.pem
     ip-10-0-2-44:
       ansible_host: <public-ip-or-hostname>
       ansible_user: ubuntu
-      ansible_ssh_private_key_file: /var/lib/jenkins/workspace/elasticsearch/AWS.pem
+      ansible_ssh_private_key_file: AWS.pem
 
