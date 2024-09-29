@@ -93,7 +93,7 @@ pipeline {
                         
                             withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: 'SSH_KEY')]) {
                                 sh '''
-                                ansible-playbook -i aws_ec2.yml playbook.yml --private-key $SSH_KEY
+                                ansible-playbook -i aws_ec2.yml playbook.yml --private-key AWS.pem
                                 '''
                             // }
                         }
