@@ -88,6 +88,7 @@ pipeline {
                     }
                     
                     steps {
+                        dir('elasticsearch') {
                         
                         // Run the Ansible playbook using dynamic inventory (aws_ec2.yml)
                         
@@ -96,7 +97,7 @@ pipeline {
                                 sh '''
                                 ansible-playbook -i aws_ec2.yml playbook.yml --private-key $SSH_KEY
                                 '''
-                            
+                            }
                         }
                                 
                     }
