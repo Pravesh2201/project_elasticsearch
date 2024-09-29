@@ -81,11 +81,11 @@ pipeline {
                        }
                 }
                 post {
-                always {
+                    always {
                     // Cleanup workspace after the build
-                    cleanWs()
+                        cleanWs()
+                    }
                 }
-            }
             }
             
             stage('Ansible Playbook Execution') {
@@ -107,14 +107,8 @@ pipeline {
                         }
                                 
                     }
-                }        
+             }        
                 
     }
 
-    // post {
-    //     always {
-    //         // Cleanup workspace after the build
-    //         cleanWs()
-    //     }
-    // }
 }
