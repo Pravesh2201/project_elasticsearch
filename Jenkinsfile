@@ -88,7 +88,7 @@ pipeline {
                     }
                     
                     steps {
-                        dir('elasticsearch') {
+                        dir('ansible') {
                         
                         // Run the Ansible playbook using dynamic inventory (aws_ec2.yml)
                         
