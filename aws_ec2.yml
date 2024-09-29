@@ -24,7 +24,7 @@ plugin: aws_ec2
 regions:
   - us-east-1
 hostnames:
-  - public_ip_address  # Ensure public IPs are used for hostnames
+  - aws_ec2  # Ensure public IPs are used for hostnames
 filters:
   tag:Name: Ansible-Dynamic-Inventory  # Make sure this tag is correctly set on your instances
 keyed_groups:
