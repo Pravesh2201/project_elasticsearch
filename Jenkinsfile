@@ -44,14 +44,6 @@ pipeline {
             }
         }
         
-        // stage('User Approval') {
-        //     steps {
-
-        //             input message: 'Do you want to apply the Terraform changes?', ok: 'Yes, apply'
-              
-        //     }
-        // }
-
         stage('Terraform Apply') {
             steps {
                    dir('terraform_es') {
@@ -94,7 +86,7 @@ pipeline {
                     }
                     
                     steps {
-                        dir('elasticsearch') {
+                        // dir('elasticsearch') {
                         
                         // Run the Ansible playbook using dynamic inventory (aws_ec2.yml)
                         
@@ -103,7 +95,7 @@ pipeline {
                                 sh '''
                                 ansible-playbook -i aws_ec2.yml playbook.yml --private-key $SSH_KEY
                                 '''
-                            }
+                            // }
                         }
                                 
                     }
