@@ -9,15 +9,15 @@
 # filters:
 #   tag:Name: Ansible-Dynamic-Inventory  # Use the tag for filtering
 
-# plugin: aws_ec2
-# regions:
-#   - us-east-1
-# hostnames:
-#   - public_ip_address  # Ensure public IP addresses are used
-# keyed_groups:
-#   - key: tags.Name
-# filters:
-#   "tag:Name": Ansible-Dynamic-Inventory  # Filter by the tag for relevant instances
+plugin: aws_ec2
+regions:
+  - us-east-1
+hostnames:
+  - public_ip_address  # Ensure public IP addresses are used
+keyed_groups:
+  - key: tags.Name
+filters:
+  "tag:Name": Ansible-Dynamic-Inventory  # Filter by the tag for relevant instances
 
 
 # plugin: aws_ec2
@@ -32,15 +32,4 @@
 
 # compose:
 #   ansible_host: public_ip_address  
-
-all:
-  hosts:
-    ip-10-0-1-104:
-      ansible_host: 100.25.217.228
-      ansible_user: ubuntu
-      ansible_ssh_private_key_file: AWS.pem
-    ip-10-0-2-44:
-      ansible_host: <public-ip-or-hostname>
-      ansible_user: ubuntu
-      ansible_ssh_private_key_file: AWS.pem
 
