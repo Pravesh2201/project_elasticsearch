@@ -13,10 +13,10 @@ plugin: aws_ec2
 regions:
   - us-east-1
 hostnames:
-  - public_ip_address
+  - public_ip_address  # Ensure public IP addresses are used
 keyed_groups:
   - key: tags.Name
 filters:
-  "tag:Name": Ansible-Dynamic-Inventory
+  "tag:Name": Ansible-Dynamic-Inventory  # Filter by the tag for relevant instances
 
 
