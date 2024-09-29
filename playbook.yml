@@ -1,6 +1,6 @@
 ---
 - name: Configure Nginx on Public Server
-  hosts: all
+  hosts: public_ip_address
   become: yes 
   roles:
     - nginx
