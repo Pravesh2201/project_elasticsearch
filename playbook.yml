@@ -1,12 +1,12 @@
 ---
 - name: Configure Nginx on Public Server
-  hosts: aws_ec2
+  hosts: all
   become: yes 
   roles:
     - nginx
 
-- name: Configure Elasticsearch and Kibana on Private Server
-  hosts: aws_ec2
-  become: yes 
-  roles:
-    - elasticsearch_kibana
+# - name: Configure Elasticsearch and Kibana on Private Server
+#   hosts: all
+#   become: yes 
+#   roles:
+#     - elasticsearch_kibana
