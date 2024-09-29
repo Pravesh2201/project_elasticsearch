@@ -1,9 +1,10 @@
 ---
 - name: Configure Nginx on Public Server
-  hosts: public_ip_address
-  become: yes 
+  hosts: all   # Use 'all' to target all instances in the inventory
+  become: yes
   roles:
     - nginx
+
 
 # - name: Configure Elasticsearch and Kibana on Private Server
 #   hosts: all
