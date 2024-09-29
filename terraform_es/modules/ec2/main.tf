@@ -21,7 +21,7 @@ resource "aws_instance" "public_instance" {
 
 resource "aws_instance" "private_instance" {
   ami           = var.ami_id
-  instance_type = "t2.medium"
+  instance_type = "t2.small"
   subnet_id     = var.private_subnet_id
   key_name = var.key_name
 
