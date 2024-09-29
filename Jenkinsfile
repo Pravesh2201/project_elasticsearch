@@ -91,12 +91,12 @@ pipeline {
                         
                         // Run the Ansible playbook using dynamic inventory (aws_ec2.yml)
                         
-                        dir('ansible') {
+                        
                             withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: 'SSH_KEY')]) {
                                 sh '''
                                 ansible-playbook -i aws_ec2.yml playbook.yml --private-key $SSH_KEY
                                 '''
-                            }
+                            
                         }
                                 
                     }
