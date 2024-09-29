@@ -1,6 +1,6 @@
 ---
 - name: Configure Nginx on Public Server
-  hosts: aws_ec2  # Use 'all' to target all instances in the inventory
+  hosts: all  # Use 'all' to target all instances in the inventory
   become: yes
   roles:
     - nginx
