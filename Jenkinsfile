@@ -21,6 +21,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
+                dir('terraform_es') {
 
                     sh '''
                         terraform init \
@@ -29,14 +30,16 @@ pipeline {
                         -backend-config="region=${REGION}" \
                         -backend-config="dynamodb_table=terraform-lock-table"
                     '''
+                }
                
             }
         }
 
         stage('Terraform Plan') {
             steps {
-   
-                    sh 'terraform plan -lock=false' 
+                   dir('terraform_es') {
+                       sh 'terraform plan -lock=false'
+                   }
 
             }
         }
@@ -51,8 +54,10 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-  
-                    sh 'terraform apply -auto-approve -lock=false'
+                   dir('terraform_es') {
+                       sh 'terraform apply -auto-approve -lock=false'
+
+                   }
                 
             }
         }
@@ -71,8 +76,9 @@ pipeline {
                     expression { params.ACTION == 'destroy' }
                 }
                 steps {
-                // Destroy Infra
-                    sh 'terraform destroy -auto-approve'
+                       dir('terraform_es') {
+                           sh 'terraform destroy -auto-approve'
+                       }
                 }
             }
             
@@ -82,6 +88,7 @@ pipeline {
                     }
                     
                     steps {
+                        
                         // Run the Ansible playbook using dynamic inventory (aws_ec2.yml)
                         
                         dir('ansible') {
