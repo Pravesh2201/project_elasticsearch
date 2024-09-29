@@ -86,7 +86,7 @@ pipeline {
                     }
                     
                     steps {
-                        // dir('elasticsearch') {
+                        dir('elasticsearch') {
                         
                         // Run the Ansible playbook using dynamic inventory (aws_ec2.yml)
                         
@@ -96,7 +96,7 @@ pipeline {
                                 // ansible-playbook -i aws_ec2.yml playbook.yml --private-key AWS.pem
                                 ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml
                                 '''
-                            // }
+                            }
                         }
                                 
                     }
