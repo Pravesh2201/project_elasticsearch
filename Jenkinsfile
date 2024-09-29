@@ -80,6 +80,12 @@ pipeline {
                            sh 'terraform destroy -auto-approve'
                        }
                 }
+                post {
+                always {
+                    // Cleanup workspace after the build
+                    cleanWs()
+                }
+            }
             }
             
             stage('Ansible Playbook Execution') {
