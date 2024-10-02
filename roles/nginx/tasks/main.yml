@@ -1,23 +1,40 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  become: true
+
 - name: Install Nginx
-  package:
+  apt:
     name: nginx
     state: present
+  become: true
 
-- name: Start and enable Nginx service
-  systemd:
-    name: nginx
-    state: started
-    enabled: yes
+- name: Remove default nginx configuration
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: true
 
-- name: Deploy Nginx proxy configuration
+- name: Deploy Nginx configuration for Artifactory
   template:
     src: nginx.conf.j2
-    dest: /etc/nginx/sites-available/kibana_elasticsearch_proxy.conf
-  notify: Restart Nginx
+    dest: /etc/nginx/sites-available/artifactory
+  become: true
 
-- name: Create a symlink for Nginx proxy configuration
+- name: Create symbolic link for Nginx configuration
   file:
-    src: /etc/nginx/sites-available/kibana_elasticsearch_proxy.conf
-    dest: /etc/nginx/sites-enabled/kibana_elasticsearch_proxy.conf
+    src: /etc/nginx/sites-available/elastic_kibana
+    dest: /etc/nginx/sites-enabled/elastic_kibana
     state: link
-  notify: Restart Nginx  # This will ensure Nginx is restarted after creating the symlink
+  become: true
+
+- name: Test Nginx configuration
+  command: nginx -t
+  become: true
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+  become: true
